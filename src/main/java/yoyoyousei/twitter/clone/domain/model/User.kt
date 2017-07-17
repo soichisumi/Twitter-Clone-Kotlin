@@ -13,20 +13,20 @@ class User {
 
     @Id
     @NotNull
-    var userId: String? = null
+    lateinit var userId: String
 
     @NotNull
-    var password: String? = null
+    lateinit var password: String
 
     @NotNull
-    var screenName: String? = null
+    lateinit var screenName: String
 
     @NotNull
-    var roleName: RoleName? = null
+    lateinit var roleName: RoleName
 
     var biography: String? = null
 
-    var iconPath: String? = null
+    lateinit var iconPath: String
 
     //双方向ならmappedbyが必要で、どのプロパティと関連するのか指定する必要がある。
     @OneToMany(mappedBy = "tweetUser")
@@ -44,12 +44,13 @@ class User {
     constructor(userId: String, password: String, screenName: String?) {
         this.userId = userId
         this.password = password
-        this.screenName = if (screenName == null || screenName == "")
-            "no name"
-        else
-            screenName
+        this.screenName =   if (screenName == null || screenName == "")
+                                "no name"
+                            else
+                                screenName
         this.roleName = RoleName.USER
         this.iconPath = "/images/noicon.png"   //Util.getNoIcon();
+        this.biography = "" //最初はbioなし
     }
 
     constructor() {}

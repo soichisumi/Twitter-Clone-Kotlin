@@ -20,13 +20,13 @@ class Tweet {
 
     @CreationTimestamp //@prepersistしてpostTime=new Timestamp(sys.currentTimeMilis());と同義
             //updatetimestampもある
-    var postTime: Timestamp? = null
+    lateinit var postTime: Timestamp
 
     @ManyToOne
-    var tweetUser: User? = null
+    lateinit var tweetUser: User
 
     @NotNull
-    var content: String? = null
+    lateinit var content: String
 
     constructor() {}
 
