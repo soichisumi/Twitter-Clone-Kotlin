@@ -66,7 +66,7 @@ constructor(private val tweetService: TweetService,
             return timeline(principal, model)
             //return "redirect:/";
         }
-        val tweet = Tweet(form.content, Util.getLoginuserFromPrincipal(principal))
+        val tweet = Tweet(form.content!!, Util.getLoginuserFromPrincipal(principal))
 
         //tweetService.save(tweet);
         try {
@@ -108,7 +108,7 @@ constructor(private val tweetService: TweetService,
         log.info("scr:" + form.screenName!!)
 
         val encoder = BCryptPasswordEncoder()
-        val user = User(form.userId, encoder.encode(form.password!!), form.screenName)
+        val user = User(form.userId!!, encoder.encode(form.password!!), form.screenName)
         try {
             userService.create(user)
         } catch (e: UserIdAlreadyExistsException) {
@@ -180,7 +180,7 @@ constructor(private val tweetService: TweetService,
         val loginUser = Util.getLoginuserFromPrincipal(principal)
         try {
             val target = userService.find(userid)
-            loginUser.following.add(target)
+            loginUser.following!!.add(target)
             userService.update(loginUser)  //DBに反映
             Util.updateAuthenticate(principal, loginUser)  //セッション情報を更新
         } catch (e: Exception) {
