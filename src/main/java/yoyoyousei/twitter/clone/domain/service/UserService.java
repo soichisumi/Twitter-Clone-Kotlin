@@ -41,7 +41,7 @@ public class UserService {
     }
 
     public List<User> getUnFollowing10Users(User loginUser, TwitterCloneController twitterCloneController){
-        TwitterCloneController.log.info("loginuser is: " + loginUser.toString());
+        TwitterCloneController.Companion.getLog().info("loginuser is: " + loginUser.toString());
 
         List<User> alluser= findAll();
         List<User> following=loginUser.getFollowing();
