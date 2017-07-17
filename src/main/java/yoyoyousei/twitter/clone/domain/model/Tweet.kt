@@ -17,7 +17,7 @@ class Tweet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var tweetId: Int? = null //primitive型にはlateinit効かないからしかたないか
-    
+
     lateinit var postTime: Timestamp
 
     @ManyToOne

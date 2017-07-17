@@ -12,19 +12,15 @@ import javax.validation.constraints.NotNull
 class User {
 
     @Id
-    @NotNull
     lateinit var userId: String
-
-    @NotNull
+    //TODO: not nullアノテーションがないとDBのカラムがnotnullにならないかどうか。kotlinなのでnotnull属性ついてほしい
     lateinit var password: String
 
-    @NotNull
     lateinit var screenName: String
 
-    @NotNull
     lateinit var roleName: RoleName
 
-    var biography: String? = null
+    lateinit var biography: String
 
     lateinit var iconPath: String
 
