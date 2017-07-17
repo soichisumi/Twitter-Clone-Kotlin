@@ -16,10 +16,8 @@ import java.time.LocalDateTime
 class Tweet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var tweetId: Int? = null
-
-    @CreationTimestamp //@prepersistしてpostTime=new Timestamp(sys.currentTimeMilis());と同義
-            //updatetimestampもある
+    var tweetId: Int? = null //primitive型にはlateinit効かないからしかたないか
+    
     lateinit var postTime: Timestamp
 
     @ManyToOne
@@ -33,5 +31,6 @@ class Tweet {
     constructor(content: String, tweetUser: User) {
         this.content = content
         this.tweetUser = tweetUser
+        this.postTime = Timestamp(System.currentTimeMillis()) //TODO: ここをcreationtimestampに。アノテーションが効かない？
     }
 }
