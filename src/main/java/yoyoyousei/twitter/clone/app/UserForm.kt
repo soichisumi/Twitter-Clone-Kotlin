@@ -7,7 +7,6 @@ import javax.validation.constraints.Size
  */
 class UserForm {
     @Size(max = 25, message = "ハンドルネームは25文字以下です")
-    lateinit var screenName: String
-
-    lateinit var biography: String
+    var screenName: String  = ""
+    var biography: String   = ""
 }

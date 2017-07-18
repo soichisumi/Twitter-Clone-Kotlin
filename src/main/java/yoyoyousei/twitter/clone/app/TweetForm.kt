@@ -10,5 +10,5 @@ import javax.validation.constraints.Size
 class TweetForm {
     @Size(min = 1, max = 255, message = "ツイートは1文字以上255文字以下です")
             //@Pattern(regexp = "[a-zA-Z0-9]*",message = "アルファベットまたは数字のみ使用できます")
-    var content: String? = null
+    var content: String = ""
 }
