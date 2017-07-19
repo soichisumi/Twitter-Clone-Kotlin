@@ -22,8 +22,6 @@ import yoyoyousei.twitter.clone.util.Util
 import java.security.Principal
 import java.util.*
 
-//import yoyoyousei.twitter.clone.domain.service.UserService;
-
 /**
  * Created by s-sumi on 2017/02/28.
  */
@@ -51,7 +49,6 @@ constructor(private val tweetService: TweetService,
         model.addAttribute("recommend", userService.getUnFollowing10Users(loginUser, this))
 
         log.info("util.noicon: " + Util.getNoIcon())
-
 
         return "timeline"
     }
