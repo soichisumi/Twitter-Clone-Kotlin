@@ -1,20 +1,12 @@
 package yoyoyousei.twitter.clone.util
 
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.stereotype.Component
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder
 import yoyoyousei.twitter.clone.app.FileUploadController
 import yoyoyousei.twitter.clone.domain.model.User
 import yoyoyousei.twitter.clone.domain.service.TwitterCloneUserDetails
-import yoyoyousei.twitter.clone.domain.service.upload.FileSystemStorageService
-
-import javax.annotation.PostConstruct
-import java.nio.file.Path
 import java.security.Principal
 
 /**

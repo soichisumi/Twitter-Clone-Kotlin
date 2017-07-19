@@ -5,11 +5,9 @@ import org.springframework.stereotype.Service
 import yoyoyousei.twitter.clone.domain.model.Tweet
 import yoyoyousei.twitter.clone.domain.model.User
 import yoyoyousei.twitter.clone.domain.repository.TweetRepository
-
-import javax.transaction.Transactional
-import java.util.ArrayList
-import java.util.Collections
+import java.util.*
 import java.util.stream.Collectors
+import javax.transaction.Transactional
 
 /**
  * 業務ロジック

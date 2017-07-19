@@ -1,7 +1,6 @@
 package yoyoyousei.twitter.clone.app
 
 
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -15,10 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import yoyoyousei.twitter.clone.domain.model.Tweet
 import yoyoyousei.twitter.clone.domain.model.User
-import yoyoyousei.twitter.clone.domain.service.*
-import yoyoyousei.twitter.clone.domain.service.upload.FileSystemStorageService
+import yoyoyousei.twitter.clone.domain.service.TweetService
+import yoyoyousei.twitter.clone.domain.service.UserIdAlreadyExistsException
+import yoyoyousei.twitter.clone.domain.service.UserIdNotFoundException
+import yoyoyousei.twitter.clone.domain.service.UserService
 import yoyoyousei.twitter.clone.util.Util
-
 import java.security.Principal
 import java.util.*
 
@@ -26,30 +26,18 @@ import java.util.*
  * Created by s-sumi on 2017/02/28.
  */
 @Controller
-//@SessionAttributes(value = {"userinfo"})
-class TwitterCloneController//各フィールドに@autowiredしてもいいが、推奨されてない(nulpoが起きやすくなるらしい)
-@Autowired
-constructor(private val tweetService: TweetService,
-            private val userService: UserService,
-            private val userDetailsService: TwitterCloneUserDetailsService,
-            private val fileSystemStorageService: FileSystemStorageService) {
-
+class TwitterCloneController @Autowired constructor(private val tweetService: TweetService,
+                                                    private val userService: UserService) {
     @GetMapping(value = "/")
     internal fun timeline(principal: Principal, model: Model): String {
-        model.addAttribute("tweetForm", TweetForm())    //attribute can be omitted.
-
-        //default attribute name is Classname whose first letter is lower case.
-
+        model.addAttribute("tweetForm", TweetForm())
 
         val loginUser = Util.getLoginuserFromPrincipal(principal)
         model.addAttribute("userinfo", loginUser)
-
         model.addAttribute("tweets", tweetService.getTimeLineforLoginUser(loginUser))
-
         model.addAttribute("recommend", userService.getUnFollowing10Users(loginUser, this))
 
         log.info("util.noicon: " + Util.getNoIcon())
-
         return "timeline"
     }
 
@@ -63,7 +51,7 @@ constructor(private val tweetService: TweetService,
             return timeline(principal, model)
             //return "redirect:/";
         }
-        val tweet = Tweet(form.content!!, Util.getLoginuserFromPrincipal(principal))
+        val tweet = Tweet(form.content, Util.getLoginuserFromPrincipal(principal))
 
         //tweetService.save(tweet);
         try {
@@ -91,21 +79,21 @@ constructor(private val tweetService: TweetService,
     @PostMapping(value = "/register")
     internal fun register(@Validated form: RegisterForm, bindingResult: BindingResult, model: Model): String {
         if (bindingResult.hasErrors()) {
-            log.info("user:" + form.userId!!)
-            log.info("pass:" + form.password!!)
-            log.info("scr:" + form.screenName!!)
+            log.info("user:" + form.userId)
+            log.info("pass:" + form.password)
+            log.info("scr:" + form.screenName)
             val err = HashSet<String>()
             bindingResult.allErrors.forEach { e -> err.add(e.defaultMessage) }
             model.addAttribute("errors", err)
             return "register"
         }
 
-        log.info("user:" + form.userId!!)
-        log.info("pass:" + form.password!!)
-        log.info("scr:" + form.screenName!!)
+        log.info("user:" + form.userId)
+        log.info("pass:" + form.password)
+        log.info("scr:" + form.screenName)
 
         val encoder = BCryptPasswordEncoder()
-        val user = User(form.userId!!, encoder.encode(form.password!!), form.screenName)
+        val user = User(form.userId, encoder.encode(form.password), form.screenName)
         try {
             userService.create(user)
         } catch (e: UserIdAlreadyExistsException) {

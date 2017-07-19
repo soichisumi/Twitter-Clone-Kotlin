@@ -8,11 +8,11 @@ import javax.validation.constraints.Size;
  */
 class LoginForm {
 
-    @Size(min = 4,max = 20,message = "ユーザIDは4文字以上20文字以下です")
-    @Pattern(regexp = "[a-zA-Z0-9]",message = "アルファベットまたは数字のみ使用できます")
-    var userId: String? = null
+    @Size(min = 4, max = 20, message = "ユーザIDは4文字以上20文字以下です")
+    @Pattern(regexp = "[a-zA-Z0-9]", message = "アルファベットまたは数字のみ使用できます")
+    var userId: String = ""
 
-    @Size(min = 4,max = 20,message = "パスワードは4文字以上20文字以下です")
-    @Pattern(regexp = "[a-zA-Z0-9]",message = "アルファベットまたは数字のみ使用できます")
-    var password:  String? = null
+    @Size(min = 4, max = 20, message = "パスワードは4文字以上20文字以下です")
+    @Pattern(regexp = "[a-zA-Z0-9]", message = "アルファベットまたは数字のみ使用できます")
+    var password: String = ""
 }

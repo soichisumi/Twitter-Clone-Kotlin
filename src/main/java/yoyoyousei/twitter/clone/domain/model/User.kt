@@ -1,9 +1,6 @@
 package yoyoyousei.twitter.clone.domain.model
 
-import yoyoyousei.twitter.clone.util.Util
-
 import javax.persistence.*
-import javax.validation.constraints.NotNull
 
 
 //デフォルトコンストラクタが必要
@@ -40,10 +37,10 @@ class User {
     constructor(userId: String, password: String, screenName: String?) {
         this.userId = userId
         this.password = password
-        this.screenName =   if (screenName == null || screenName == "")
-                                "no name"
-                            else
-                                screenName
+        this.screenName = if (screenName == null || screenName == "")
+            "no name"
+        else
+            screenName
         this.roleName = RoleName.USER
         this.iconPath = "/images/noicon.png"   //Util.getNoIcon();
         this.biography = "" //最初はbioなし
@@ -70,8 +67,8 @@ class User {
     }
 
     override fun hashCode(): Int {
-        var result = userId!!.hashCode()
-        result = 31 * result + password!!.hashCode()
+        var result = userId.hashCode()
+        result = 31 * result + password.hashCode()
         return result
     }
 }

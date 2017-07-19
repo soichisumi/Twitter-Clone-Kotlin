@@ -3,19 +3,17 @@ package yoyoyousei.twitter.clone.domain.service
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import yoyoyousei.twitter.clone.app.TwitterCloneController
-import yoyoyousei.twitter.clone.domain.model.Tweet
 import yoyoyousei.twitter.clone.domain.model.User
 import yoyoyousei.twitter.clone.domain.repository.UserRepository
-
-import javax.transaction.Transactional
 import java.util.stream.Collectors
+import javax.transaction.Transactional
 
 @Service
 @Transactional
-open class UserService{
+open class UserService {
     @Autowired
-    lateinit var userRepository :UserRepository //open class UserService {  -> open class UserService @Autowired constructor(val userRepository: UserRepository) { 　
-                                                //でもOK
+    lateinit var userRepository: UserRepository //open class UserService {  -> open class UserService @Autowired constructor(val userRepository: UserRepository) { 　
+    //でもOK
 
     open fun findAll(): List<User> {
         return userRepository.findAll()

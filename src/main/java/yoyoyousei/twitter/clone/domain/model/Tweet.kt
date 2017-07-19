@@ -1,13 +1,8 @@
 package yoyoyousei.twitter.clone.domain.model
 
-import org.hibernate.annotations.CreationTimestamp
-
+import java.sql.Timestamp
 import javax.persistence.*
 import javax.validation.constraints.NotNull
-import javax.validation.constraints.Size
-import java.sql.Timestamp
-import java.time.LocalDate
-import java.time.LocalDateTime
 
 /**
  * Created by s-sumi on 2017/02/27.

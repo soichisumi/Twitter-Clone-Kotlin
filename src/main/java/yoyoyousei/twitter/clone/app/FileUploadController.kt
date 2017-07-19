@@ -11,16 +11,13 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
-import yoyoyousei.twitter.clone.domain.model.User
 import yoyoyousei.twitter.clone.domain.service.UserIdNotFoundException
 import yoyoyousei.twitter.clone.domain.service.UserService
 import yoyoyousei.twitter.clone.domain.service.upload.StorageFileNotFoundException
 import yoyoyousei.twitter.clone.domain.service.upload.StorageService
 import yoyoyousei.twitter.clone.util.Util
-
-import java.nio.file.Path
 import java.security.Principal
-import java.util.HashSet
+import java.util.*
 
 /**
  * Created by s-sumi on 2017/03/06.
@@ -31,7 +28,7 @@ import java.util.HashSet
 @RequestMapping("files")
 class FileUploadController @Autowired
 constructor(private val userService: UserService, private val storageService: StorageService) {
-
+    //for debug
     /*@GetMapping("/")
     public String listUploadedFiles(Model model)throws IOException{
         model.addAttribute("files",storageService
@@ -67,7 +64,7 @@ constructor(private val userService: UserService, private val storageService: St
         val user = Util.getLoginuserFromPrincipal(principal)
         val path = storageService.load(filename)
 
-        log.info("path.filename.tostring: " + path.fileName.toString())
+        log!!.info("path.filename.tostring: " + path.fileName.toString())
         user.iconPath = getPathStrFromFilename(path.fileName.toString())
 
         try {
@@ -80,7 +77,7 @@ constructor(private val userService: UserService, private val storageService: St
         } catch (e: Exception) {
             val errors = HashSet<String>()
             errors.add("unexpected error occured. try again.")
-            log.info(e.message)
+            log!!.info(e.message)
             redirectAttributes.addFlashAttribute("errors", errors)
             return "redirect:/update"
         }
@@ -109,8 +106,7 @@ constructor(private val userService: UserService, private val storageService: St
     }
 
     companion object {
-
-        val log = LoggerFactory.getLogger(FileUploadController::class.java)
+        val log: Logger? = LoggerFactory.getLogger(FileUploadController::class.java)
     }
 
 }
