@@ -1,5 +1,7 @@
 package yoyoyousei.twitter.clone.domain.model
 
+import java.util.*
+import javax.management.relation.Role
 import javax.persistence.*
 
 
@@ -15,15 +17,15 @@ class User {
 
     lateinit var screenName: String
 
-    lateinit var roleName: RoleName
+    var roleName = RoleName.USER
 
-    lateinit var biography: String
+    var biography = ""
 
-    lateinit var iconPath: String
+    var iconPath = "/images/noicon.png"
 
     //双方向ならmappedbyが必要で、どのプロパティと関連するのか指定する必要がある。
     @OneToMany(mappedBy = "tweetUser")
-    var tweets: List<Tweet>? = null
+    var tweets = Collections.EMPTY_LIST.toMutableList()
 
     //fetchtype: Eager フィールドの呼び出しを最初の呼び出しで行う  lazy:フィールドにアクセスが合った時点で
     //cascade: このプロパティをどのように変更した際に関連するentityに変更を反映するか
@@ -32,7 +34,7 @@ class User {
     //勝手に反映してほしくないしcascade不要
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "relation", joinColumns = arrayOf(JoinColumn(name = "user_id")), inverseJoinColumns = arrayOf(JoinColumn(name = "following_id")))
-    var following: MutableList<User>? = null
+    var following = Collections.EMPTY_LIST.toMutableList()
 
     constructor(userId: String, password: String, screenName: String?) {
         this.userId = userId
@@ -41,9 +43,6 @@ class User {
             "no name"
         else
             screenName
-        this.roleName = RoleName.USER
-        this.iconPath = "/images/noicon.png"   //Util.getNoIcon();
-        this.biography = "" //最初はbioなし
     }
 
     constructor() {}
