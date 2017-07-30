@@ -12,12 +12,18 @@ import yoyoyousei.twitter.clone.domain.repository.UserRepository
  */
 @Service
 class TwitterCloneUserDetailsService : UserDetailsService {
+
+    internal var userRepository: UserRepository
+
     @Autowired
-    internal var userRepository: UserRepository? = null
+    constructor(userRepository: UserRepository) {
+        this.userRepository = userRepository
+    }
+
 
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails {
-        val user = userRepository!!.findOne(username) ?: throw UsernameNotFoundException(username + " is not found.")
+        val user = userRepository.findOne(username) ?: throw UsernameNotFoundException(username + " is not found.")
         return TwitterCloneUserDetails(user)
     }
 }

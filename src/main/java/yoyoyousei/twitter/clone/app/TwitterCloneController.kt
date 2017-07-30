@@ -98,7 +98,7 @@ class TwitterCloneController @Autowired constructor(private val tweetService: Tw
             userService.create(user)
         } catch (e: UserIdAlreadyExistsException) {
             val errors = HashSet<String>()
-            errors.add(e.message!!)
+            errors.add(e.message?:"userId already exists.")
             model.addAttribute("errors", errors)
             return "register"
         } catch (e: Exception) {
@@ -145,7 +145,7 @@ class TwitterCloneController @Autowired constructor(private val tweetService: Tw
             model.addAttribute("userinfo", newUser)
         } catch (e: UserIdNotFoundException) {
             val errors = HashSet<String>()
-            errors.add(e.message!!)
+            errors.add(e.message?:"userId not found")
             model.addAttribute("errors", errors)
             return "mypage"
         } catch (e: Exception) {
@@ -165,7 +165,7 @@ class TwitterCloneController @Autowired constructor(private val tweetService: Tw
         val loginUser = Util.getLoginuserFromPrincipal(principal)
         try {
             val target = userService.find(userid)
-            loginUser.following!!.add(target)
+            loginUser.following.add(target)
             userService.update(loginUser)  //DBに反映
             Util.updateAuthenticate(principal, loginUser)  //セッション情報を更新
         } catch (e: Exception) {

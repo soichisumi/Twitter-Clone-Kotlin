@@ -18,7 +18,7 @@ import yoyoyousei.twitter.clone.domain.service.TwitterCloneUserDetailsService
 @EnableWebSecurity
 open class WebSecurityConfig : WebSecurityConfigurerAdapter() {
     @Autowired
-    internal var userDetailsService: TwitterCloneUserDetailsService? = null
+    lateinit internal var userDetailsService: TwitterCloneUserDetailsService
 
     @Bean
     open internal fun passwordEncoder(): PasswordEncoder {
@@ -45,7 +45,7 @@ open class WebSecurityConfig : WebSecurityConfigurerAdapter() {
     }
 
     @Throws(Exception::class)
-    override fun configure(auth: AuthenticationManagerBuilder?) {
-        auth!!.userDetailsService<TwitterCloneUserDetailsService>(userDetailsService).passwordEncoder(passwordEncoder())
+    override fun configure(auth: AuthenticationManagerBuilder) {
+        auth.userDetailsService<TwitterCloneUserDetailsService>(userDetailsService).passwordEncoder(passwordEncoder())
     }
 }

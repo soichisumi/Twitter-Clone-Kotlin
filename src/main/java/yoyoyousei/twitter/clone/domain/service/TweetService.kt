@@ -10,7 +10,6 @@ import java.util.stream.Collectors
 import javax.transaction.Transactional
 
 /**
- * 業務ロジック
  * Created by s-sumi on 2017/02/28.
  */
 
@@ -30,7 +29,7 @@ open class TweetService {
 
     open fun getTimeLineforLoginUser(loginuser: User): List<Tweet> {
         val following = loginuser.following
-        following!!.add(loginuser)
+        following.add(loginuser)
         val ids = following.stream().map<String>({ it.userId }).collect(Collectors.toList<String>())
         return tweetRepository.findTop100ByTweetUser_UserIdInOrderByPostTimeDesc(ids)
     }
@@ -39,11 +38,11 @@ open class TweetService {
         return tweetRepository.save(tweet)
     }
 
-    open fun delete(id: Int?) {
+    open fun delete(id: Int) {
         tweetRepository.delete(id)
     }
 
-    open fun find(id: Int?): Tweet {
+    open fun find(id: Int): Tweet {
         return tweetRepository.findOne(id)
     }
 }

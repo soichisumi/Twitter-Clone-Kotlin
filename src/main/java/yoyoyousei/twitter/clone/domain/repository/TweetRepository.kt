@@ -8,6 +8,7 @@ import yoyoyousei.twitter.clone.domain.model.Tweet
  */
 //モデルのCLUD担当
 interface TweetRepository : JpaRepository<Tweet, Int> {
+    //条件にマッチする結果がなかったらnullです
     fun findAllByOrderByPostTimeDesc(): List<Tweet>
     fun findTop100ByTweetUser_UserIdInOrderByPostTimeDesc(tweetUserId: List<String>): List<Tweet>
 }

@@ -50,7 +50,7 @@ open class UserService {
         val following = loginUser.following
         val unFollowing10Users = alluser.stream()
                 .limit(10)
-                .filter { u -> !(following!!.contains(u) || u == loginUser) }
+                .filter { u -> !(following.contains(u) || u == loginUser) }
                 .collect(Collectors.toList<User>())
         return unFollowing10Users
     }

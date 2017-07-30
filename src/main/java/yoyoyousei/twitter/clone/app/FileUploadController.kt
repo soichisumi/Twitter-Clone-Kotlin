@@ -64,20 +64,20 @@ constructor(private val userService: UserService, private val storageService: St
         val user = Util.getLoginuserFromPrincipal(principal)
         val path = storageService.load(filename)
 
-        log!!.info("path.filename.tostring: " + path.fileName.toString())
+        log.info("path.filename.tostring: " + path.fileName.toString())
         user.iconPath = getPathStrFromFilename(path.fileName.toString())
 
         try {
             userService.update(user)
         } catch (e: UserIdNotFoundException) {
             val errors = HashSet<String>()
-            errors.add(e.message!!)
+            errors.add(e.message ?: "userId not found")
             redirectAttributes.addFlashAttribute("errors", errors)
             return "redirect:/update"
         } catch (e: Exception) {
             val errors = HashSet<String>()
             errors.add("unexpected error occured. try again.")
-            log!!.info(e.message)
+            log.info(e.message)
             redirectAttributes.addFlashAttribute("errors", errors)
             return "redirect:/update"
         }
@@ -92,12 +92,7 @@ constructor(private val userService: UserService, private val storageService: St
     }
 
     fun isImageExtension(extension: String): Boolean {
-        for (s in Util.imageExtensions) {
-            if (s == extension) {
-                return true
-            }
-        }
-        return false
+        return Util.imageExtensions.contains(extension)
     }
 
     @ExceptionHandler(StorageFileNotFoundException::class)
@@ -106,7 +101,7 @@ constructor(private val userService: UserService, private val storageService: St
     }
 
     companion object {
-        val log: Logger? = LoggerFactory.getLogger(FileUploadController::class.java)
+        val log: Logger = LoggerFactory.getLogger(FileUploadController::class.java)
     }
 
 }
