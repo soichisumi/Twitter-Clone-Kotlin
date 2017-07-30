@@ -21,6 +21,7 @@ class Tweet {
     @NotNull
     lateinit var content: String
 
+    //spring jpaに必要
     constructor() {}
 
     constructor(content: String, tweetUser: User) {

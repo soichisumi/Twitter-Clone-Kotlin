@@ -1,13 +1,9 @@
 package yoyoyousei.twitter.clone.domain.model
 
-import java.util.*
-import javax.management.relation.Role
 import javax.persistence.*
 
 
-//デフォルトコンストラクタが必要
 @Entity
-//@Table(name = "usr")
 class User {
 
     @Id
@@ -20,12 +16,11 @@ class User {
     var roleName = RoleName.USER
 
     var biography = ""
-
     var iconPath = "/images/noicon.png"
 
     //双方向ならmappedbyが必要で、どのプロパティと関連するのか指定する必要がある。
     @OneToMany(mappedBy = "tweetUser")
-    var tweets = Collections.EMPTY_LIST.toMutableList()
+    var tweets = mutableListOf<Tweet>()
 
     //fetchtype: Eager フィールドの呼び出しを最初の呼び出しで行う  lazy:フィールドにアクセスが合った時点で
     //cascade: このプロパティをどのように変更した際に関連するentityに変更を反映するか
@@ -34,18 +29,19 @@ class User {
     //勝手に反映してほしくないしcascade不要
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "relation", joinColumns = arrayOf(JoinColumn(name = "user_id")), inverseJoinColumns = arrayOf(JoinColumn(name = "following_id")))
-    var following = Collections.EMPTY_LIST.toMutableList()
+    var following= mutableListOf<User>()
 
     constructor(userId: String, password: String, screenName: String?) {
         this.userId = userId
         this.password = password
-        this.screenName = if (screenName == null || screenName == "")
-            "no name"
-        else
-            screenName
+        this.screenName =   if (screenName == null || screenName == "")
+                                "no name"
+                            else
+                                screenName
     }
 
-    constructor() {}
+    //spring jpaに必要
+    constructor()
 
     override fun toString(): String {
         return "User{" +
