@@ -42,7 +42,7 @@ open class TweetService {
         tweetRepository.delete(id)
     }
 
-    open fun find(id: Int): Tweet {
+    open fun find(id: Int): Tweet? {
         return tweetRepository.findOne(id)
     }
 }
